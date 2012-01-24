@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory
+		android:title="Controls"
+		android:key="controls">
+		<CheckBoxPreference
+			android:key="tap_fire_enabled"
+			android:title="Fire by tapping phone *Beta*"
+			android:summary="Physically tap your phone to fire. Touch screen for special."
+			android:persistent="true"
+			android:defaultValue="false"/>
+		<ListPreference
+			android:negativeButtonText="Cancel"
+			android:key="tap_fire_sensitivity"
+			android:title="Tap Trigger Sensitivity"
+			android:summary="1 = least sensitive, 5 = most sensitive"
+			android:entries="@array/tap_sensitivity"
+			android:dialogTitle="Select Sensitivity"
+			android:defaultValue="3"
+			android:entryValues="@array/tap_sensitivity"/>
+	</PreferenceCategory>
+</PreferenceScreen>
+			

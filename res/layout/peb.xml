@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/peb_full"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	android:gravity="center"
+	android:background="#cc000000"
+	android:orientation="vertical"
+	android:clickable="true">
+	<TableLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content">
+		<TableRow>
+			<TextView
+				android:id="@+id/hitbonustitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="10dp"
+				android:textColor="#ffffff00"
+				android:textSize="20dp"
+				android:text="Accuracy Bonus" />
+			<TextView
+				android:id="@+id/hitbonus"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="#ffffff00"
+				android:textSize="20dp"
+				android:text="" />
+		</TableRow>
+		<TableRow>
+			<TextView
+				android:id="@+id/timebonustitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="10dp"
+				android:textColor="#ffffff00"
+				android:textSize="20dp"
+				android:text="Time Bonus" />
+			<TextView
+				android:id="@+id/timebonus"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@+id/begscore"
+				android:textColor="#ffffff00"
+				android:textSize="20dp"
+				android:text="" />
+		</TableRow>
+		<TableRow>
+			<TextView
+				android:id="@+id/totalscoretitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="10dp"
+				android:textColor="#ffffff00"
+				android:textSize="20dp"
+				android:text="Total Score" />
+			<TextView
+				android:id="@+id/totalscore"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@+id/begscore"
+				android:textColor="#ffffff00"
+				android:textSize="20dp"
+				android:text="" />
+		</TableRow>
+	</TableLayout>
+	<TextView
+		android:id="@+id/click_to_continue"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="30dp"
+		android:textColor="#ffffff00"
+		android:textSize="15dp"
+		android:text="&lt;click to continue&gt;" />
+</LinearLayout>

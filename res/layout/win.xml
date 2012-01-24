@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:background="@drawable/youwin"
+	android:id="@+id/full_screen"
+    >
+    <LinearLayout 
+	    android:orientation="vertical"
+   		android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_marginLeft="20dp"
+		android:layout_marginTop="10dp">
+    	<TextView
+    		android:id="@+id/congrats"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:text="CONGRATULATIONS"
+    		android:textColor="#ffff00"
+    		android:textSize="30sp"/>
+    	<TextView 
+    		android:id="@+id/score"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:text="Score: "
+    		android:textColor="#ffffff"
+    		android:textSize="25sp"/>
+    	<TextView 
+    		android:id="@+id/highscore"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_marginLeft="40dp"
+    		android:text="HIGH SCORE!"
+    		android:textColor="#ffff00"
+    		android:textSize="20sp"/>
+    </LinearLayout>
+</LinearLayout>
