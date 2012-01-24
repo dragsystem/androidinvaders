@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">Android Invaders</string>
+    <string name="app_name">Triage</string>
 <string name="score">Score: </string>
 <string name="game_over">Game over!</string>
 <string name="level_cleared">Level cleared!</string>
