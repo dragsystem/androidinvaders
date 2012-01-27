@@ -120,12 +120,10 @@ public class AndroidInvaders extends Activity implements SensorEventListener {
 	public void onPause() {
 		super.onPause();
 		
-		if(av.threadExists()) {
+		if(av.threadExists() && av.getGameThread().isRunning() && !launchingPauseMenu) {
+			startActivity(new Intent(AndroidInvaders.this, PlayMenu.class));
 			av.getGameThread().setRunning(false);
 		}
-		
-		if(av.threadExists() && av.getGameThread().isRunning() && !launchingPauseMenu)
-			startActivity(new Intent(AndroidInvaders.this, PlayMenu.class));
 		
 		GameEngine ge = av.getGameEngine();
 		Settings.putInt("levelNum", ge.pLevel);

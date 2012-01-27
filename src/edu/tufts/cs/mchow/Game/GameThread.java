@@ -59,29 +59,24 @@ public class GameThread extends Thread {
 	}
 	
 	public void gameOver() {
-		recordScore();
+		endGame();
 		Intent i = new Intent(AndroidInvaders.getInstance(), LoseScreen.class);
 		i.putExtra("score", score);
 		AndroidInvaders.getInstance().finish();
 		AndroidInvaders.getInstance().startActivity(i);
-		running = false;
 		AndroidInvaders.resetGamePrefs();
-		endGame();
 	}
 	
 	public void winGame() {
-		recordScore();
-		Intent i = new Intent(AndroidInvaders.getInstance(), WinScreen.class);
-		i.putExtra("score", score);
-		AndroidInvaders.getInstance().finish();
-		AndroidInvaders.getInstance().startActivity(i);
-		running = false;
-		AndroidInvaders.resetGamePrefs();
 		endGame();
+		AndroidInvaders.getInstance().finish();
+		AndroidInvaders.resetGamePrefs();
 	}
 	
 	private void endGame() {
+		recordScore();
 		ge.reset(0);
+		running = false;
 	}
 	
 	private void recordScore() {

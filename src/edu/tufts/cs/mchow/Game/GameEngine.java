@@ -86,22 +86,23 @@ public class GameEngine {
 	}
 
 	public void nextPlanet() {
+		thread.setRunning(false);
+		Intent PEB = new Intent(context, PlanetEndBonusActivity.class);
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_STARTTIME, 0);
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_STARTSHOTS, 0);
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_MINSHOTS, planet.getMinShots());
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_SCORE, score);
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_ENDSHOTS, shotCount);
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_ENDTIME, gameClock);
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_GAMEWIN, null!=planet);
+		planet = planet.getNextPlanet();
+		context.startActivity(PEB);
+		
 		planetNum++;
 		if(planetNum<0) {
 			resetPlanet();
 		} else if (planet==null) {
 			onWin();
-		} else {			
-			Intent PEB = new Intent(context, PlanetEndBonusActivity.class);
-			PEB.putExtra(PlanetEndBonusActivity.EXTRA_STARTTIME, 0);
-			PEB.putExtra(PlanetEndBonusActivity.EXTRA_STARTSHOTS, 0);
-			PEB.putExtra(PlanetEndBonusActivity.EXTRA_MINSHOTS, planet.getMinShots());
-			PEB.putExtra(PlanetEndBonusActivity.EXTRA_SCORE, score);
-			PEB.putExtra(PlanetEndBonusActivity.EXTRA_ENDSHOTS, shotCount);
-			PEB.putExtra(PlanetEndBonusActivity.EXTRA_ENDTIME, gameClock);
-
-			planet = planet.getNextPlanet();
-			context.startActivity(PEB);
 		}
 	}
 	
@@ -113,9 +114,6 @@ public class GameEngine {
 	}
 	
 	public void nextLevel() {
-		if(planet==null) {
-			onWin();
-		}
 		levelNum++;
 		shots.clear();
 		specialShots.clear();
@@ -124,6 +122,7 @@ public class GameEngine {
 		if(0 <= levelNum && levelNum <= 9) {
 			level = planet.getLevel(levelNum, this);
 		} else if (10 == levelNum) {
+			numInARow = 0;
 			boss = planet.getBoss(this);
 		} else {
 			nextPlanet();
@@ -188,7 +187,7 @@ public class GameEngine {
 	}
 	
 	public void getPrefs() {
-		levelNum = Settings.getInt("levelNum", 0) - 1;
+		levelNum = 8;//Settings.getInt("levelNum", 0) - 1;
 		planetNum = Settings.getInt("planetNum", 0) - 1;
 		score = Settings.getInt("score", 0);
 		gameClock = Settings.getInt("clock", 0);
@@ -645,16 +644,6 @@ public class GameEngine {
 			thread.score = score;
 		
 		drawGame(canvas);
-//		if(planetComplete) {
-//			nextLevel();
-//			PEB.drawPEB(canvas);
-//			Intent PEB = new Intent(context, PlanetEndBonusActivity.class);
-//			PEB.putExtra("startTime", );
-//			context.startActivity(PEB);
-//			if(doFire || doSpecialFire) {
-//				nextLevel();
-//			}
-//		}
 		
 		if (lives < 1) {
 			onLose();

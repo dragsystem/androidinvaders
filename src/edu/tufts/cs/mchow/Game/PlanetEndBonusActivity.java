@@ -1,6 +1,7 @@
 package edu.tufts.cs.mchow.Game;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,11 +10,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import edu.tufts.cs.mchow.R;
+import edu.tufts.cs.mchow.Menu.WinScreen;
 
 public class PlanetEndBonusActivity extends Activity {
 	private int startTime, startShots, minShots, maxTime;
 	private int endShots, endTime; 
 	private int score, accuracyBonus, timeBonus, totalBonus;
+	private boolean winGame;
+	private final Context context = this;
+	
 	public static final String EXTRA_STARTTIME = "startTime";
 	public static final String EXTRA_STARTSHOTS = "startShots";
 	public static final String EXTRA_MINSHOTS = "MIN_SHOTS";
@@ -21,6 +26,7 @@ public class PlanetEndBonusActivity extends Activity {
 	public static final String EXTRA_SCORE = "score";
 	public static final String EXTRA_ENDSHOTS = "endShots";
 	public static final String EXTRA_ENDTIME = "endTime";
+	public static final String EXTRA_GAMEWIN = "gameWin";
 	private Typeface f;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,7 @@ public class PlanetEndBonusActivity extends Activity {
 		findViewById(R.id.peb_full).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				exit();
 			}
 		});
 		
@@ -41,8 +47,27 @@ public class PlanetEndBonusActivity extends Activity {
 		score = i.getIntExtra(EXTRA_SCORE, -1);
 		endShots = i.getIntExtra(EXTRA_ENDSHOTS, -1);
 		endTime = i.getIntExtra(EXTRA_ENDTIME, -1);
+		winGame = i.getBooleanExtra(EXTRA_GAMEWIN, false);
 		calcBonus();
 		drawPEB();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		exit();
+	}
+	
+	private void exit() {
+		if(winGame) {
+			Intent i = new Intent(this, WinScreen.class);
+			i.putExtra("score", score);
+			startActivity(i);
+		}
+	}
+	
+	public void onPause() {
+		super.onPause();
+		finish();
 	}
 	
 	public void onDestroy() {
