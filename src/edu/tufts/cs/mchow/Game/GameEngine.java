@@ -187,7 +187,7 @@ public class GameEngine {
 	}
 	
 	public void getPrefs() {
-		levelNum = 8;//Settings.getInt("levelNum", 0) - 1;
+		levelNum = Settings.getInt("levelNum", 0) - 1;
 		planetNum = Settings.getInt("planetNum", 0) - 1;
 		score = Settings.getInt("score", 0);
 		gameClock = Settings.getInt("clock", 0);
