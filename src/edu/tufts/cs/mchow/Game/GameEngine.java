@@ -12,7 +12,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.Display;
 import edu.tufts.cs.mchow.R;
+import edu.tufts.cs.mchow.Aliens.Alien;
 import edu.tufts.cs.mchow.Planet0.Planet0;
+import edu.tufts.cs.mchow.Planet1.Planet1;
 import edu.tufts.cs.mchow.Settings.Settings;
 
 
@@ -77,16 +79,30 @@ public class GameEngine {
 		loadingEnemies = true;
 		difficulty = 0;
 
-		resetPlanet();
 		alienType = 0;
 		numInARow = 0;
 		MAX_SHOTS = 1;
 		
 		doFire = doSpecialFire = false;
 	}
+	
+	public void start() {
+		switch(planetNum) {
+		case 0:
+			planet = new Planet0();
+			break;
+		case 1:
+			planet = new Planet1();
+			break;
+		default:
+			planet = null;			
+		}
+		nextLevel();
+	}
 
 	public void nextPlanet() {
 		thread.setRunning(false);
+		
 		Intent PEB = new Intent(context, PlanetEndBonusActivity.class);
 		PEB.putExtra(PlanetEndBonusActivity.EXTRA_STARTTIME, 0);
 		PEB.putExtra(PlanetEndBonusActivity.EXTRA_STARTSHOTS, 0);
@@ -94,8 +110,11 @@ public class GameEngine {
 		PEB.putExtra(PlanetEndBonusActivity.EXTRA_SCORE, score);
 		PEB.putExtra(PlanetEndBonusActivity.EXTRA_ENDSHOTS, shotCount);
 		PEB.putExtra(PlanetEndBonusActivity.EXTRA_ENDTIME, gameClock);
-		PEB.putExtra(PlanetEndBonusActivity.EXTRA_GAMEWIN, null!=planet);
+		
 		planet = planet.getNextPlanet();
+		levelNum = -1;
+		
+		PEB.putExtra(PlanetEndBonusActivity.EXTRA_GAMEWIN, null==planet);
 		context.startActivity(PEB);
 		
 		planetNum++;
@@ -103,6 +122,9 @@ public class GameEngine {
 			resetPlanet();
 		} else if (planet==null) {
 			onWin();
+		} else {
+			levelNum = -1;
+			nextLevel();
 		}
 	}
 	
@@ -188,7 +210,7 @@ public class GameEngine {
 	
 	public void getPrefs() {
 		levelNum = Settings.getInt("levelNum", 0) - 1;
-		planetNum = Settings.getInt("planetNum", 0) - 1;
+		planetNum = 1;//Settings.getInt("planetNum", 0);
 		score = Settings.getInt("score", 0);
 		gameClock = Settings.getInt("clock", 0);
 		lives = Settings.getInt("lives", 5);
@@ -236,16 +258,13 @@ public class GameEngine {
 			numInARow = 0;
 			switch (alienType) {
 			case 1:
-				specialShots.add(new SpecialShot1(this, me.x + me.width / 2,
-						me.y));
+				specialShots.add(new SpecialShot1(this, me.x + me.width / 2, me.y));
 				break;
 			case 2:
-				specialShots.add(new SpecialShot2(this, me.x + me.width / 2,
-						me.y));
+				specialShots.add(new SpecialShot2(this, me.x + me.width / 2, me.y));
 				break;
 			case 3:
-				specialShots.add(new SpecialShot3(this, me.x + me.width / 2,
-						me.y));
+				specialShots.add(new SpecialShot3(this, me.x + me.width / 2, me.y));
 				break;
 			case 4:
 				SpecialShot4 first = new SpecialShot4(this, me.x + me.width/2, me.y, 1);
@@ -254,6 +273,9 @@ public class GameEngine {
 				specialShots.add(first);
 				specialShots.add(second);
 				break;
+			case 5:
+				specialShots.addAll(level.getSwarmMissleTargets(me.x + me.width / 2, me.y));
+				break;				
 			}
 			alienType = 0;
 		}
@@ -262,6 +284,10 @@ public class GameEngine {
 
 	public void addMothership() {
 		level.motherships.add(new Mothership(this, 0, 0));
+	}
+	
+	public void addExplosion(Explosion e) {
+		explosions.add(e);
 	}
 	
 	public ArrayList<SpecialShot> getSpecialShots() {
@@ -333,7 +359,6 @@ public class GameEngine {
 	}
 	
 	public void addBoss() {
-//		boss = new Boss0(this);
 		boss = planet.getBoss(this);
 		numInARow = 0;
 	}
@@ -492,10 +517,14 @@ public class GameEngine {
 				while (it2b.hasNext()) {
 					SpecialShot ss = it2b.next();
 					if (baddie.isActive() && baddie.intersect(ss)) {
-						baddie.hit();
-						ss.hit(baddie.getX() + baddie.getWidth() / 2, baddie.getY()
-								+ baddie.getHeight() / 2);
-						explosions.add(new Explosion(this, baddie.getX(), baddie.getY()));
+						if(ss instanceof SpecialShot5) {
+							((SpecialShot5)ss).hit(baddie);
+						} else {
+							baddie.hit();
+							ss.hit(baddie.getX() + baddie.getWidth() / 2, baddie.getY()
+									+ baddie.getHeight() / 2);
+							explosions.add(new Explosion(this, baddie.getX(), baddie.getY()));
+						}
 					}
 				}
 

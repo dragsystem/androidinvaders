@@ -1,7 +1,6 @@
 package edu.tufts.cs.mchow.Game;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ public class PlanetEndBonusActivity extends Activity {
 	private int endShots, endTime; 
 	private int score, accuracyBonus, timeBonus, totalBonus;
 	private boolean winGame;
-	private final Context context = this;
 	
 	public static final String EXTRA_STARTTIME = "startTime";
 	public static final String EXTRA_STARTSHOTS = "startShots";
@@ -62,16 +60,14 @@ public class PlanetEndBonusActivity extends Activity {
 			Intent i = new Intent(this, WinScreen.class);
 			i.putExtra("score", score);
 			startActivity(i);
+		} else {
+			finish();
 		}
 	}
 	
 	public void onPause() {
 		super.onPause();
 		finish();
-	}
-	
-	public void onDestroy() {
-		super.onDestroy();
 	}
 	
 	private void calcBonus() {

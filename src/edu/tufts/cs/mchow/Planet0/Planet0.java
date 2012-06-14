@@ -1,10 +1,10 @@
 package edu.tufts.cs.mchow.Planet0;
 
-import edu.tufts.cs.mchow.Game.Boss0;
 import edu.tufts.cs.mchow.Game.GameEngine;
 import edu.tufts.cs.mchow.Game.GameSprite;
 import edu.tufts.cs.mchow.Game.Level;
 import edu.tufts.cs.mchow.Game.Planet;
+import edu.tufts.cs.mchow.Planet1.Planet1;
 
 public class Planet0 extends Planet {
 	public Level getLevel(int levelNum, GameEngine ge) {
@@ -50,6 +50,6 @@ public class Planet0 extends Planet {
 	}
 	
 	public Planet getNextPlanet() {
-		return null;
+		return new Planet1();
 	}
 }

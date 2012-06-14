@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import edu.tufts.cs.mchow.Menu.LoseScreen;
-import edu.tufts.cs.mchow.Menu.WinScreen;
 import edu.tufts.cs.mchow.Settings.Settings;
 
 public class GameThread extends Thread {

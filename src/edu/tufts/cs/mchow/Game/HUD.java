@@ -14,6 +14,7 @@ public class HUD extends GameSprite {
 	private Bitmap blueBox;
 	private Bitmap redBox;
 	private Bitmap yellowBox;
+	private Bitmap grayBox;
 //	private Bitmap vertPic;
 //	private Bitmap leftPic;
 //	private Bitmap rightPic;
@@ -31,6 +32,8 @@ public class HUD extends GameSprite {
 				.getResources(), R.drawable.box_red);
 		yellowBox = BitmapFactory.decodeResource(gameEngine.getContext()
 				.getResources(), R.drawable.box_yellow);
+		grayBox = BitmapFactory.decodeResource(gameEngine.getContext()
+				.getResources(), R.drawable.box_gray);
 //		vertPic = BitmapFactory.decodeResource(gameEngine.getContext()
 //				.getResources(), R.drawable.vert);
 //		leftPic = BitmapFactory.decodeResource(gameEngine.getContext()
@@ -79,6 +82,9 @@ public class HUD extends GameSprite {
 			break;
 		case 4:
 			drawBox(c, yellowBox, "SPLIT SHOT");
+			break;
+		case 5:
+			drawBox(c, grayBox, "SWARM SHOT");
 			break;
 		}
 		

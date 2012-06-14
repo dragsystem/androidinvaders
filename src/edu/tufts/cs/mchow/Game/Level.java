@@ -2,6 +2,14 @@ package edu.tufts.cs.mchow.Game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
+import edu.tufts.cs.mchow.Aliens.Alien;
+import edu.tufts.cs.mchow.Aliens.Alien1;
+import edu.tufts.cs.mchow.Aliens.Alien2;
+import edu.tufts.cs.mchow.Aliens.Alien3;
+import edu.tufts.cs.mchow.Aliens.Alien4;
+import edu.tufts.cs.mchow.Aliens.Alien5;
 
 public abstract class Level {
 	protected GameEngine ge;
@@ -34,6 +42,9 @@ public abstract class Level {
 	public void addBaddie(int colNum, int rowNum, int type) {
 		Alien baddie = null;
 		switch (type) {
+		case 5:
+			baddie = new Alien5(ge, COLSTART + COL * colNum, ROWSTART + ROW * rowNum);
+			break;
 		case 4:
 			baddie = new Alien4(ge, COLSTART + COL * colNum, ROWSTART + ROW * rowNum);
 			break;
@@ -99,5 +110,59 @@ public abstract class Level {
 	
 	public int getTotalHits() {
 		return TOTAL_HITS;
+	}
+
+	public ArrayList<SpecialShot5> getSwarmMissleTargets(double x, double y) {
+		ArrayList<Alien> targets = new ArrayList<Alien>(5);
+		ArrayList<SpecialShot5> missiles = new ArrayList<SpecialShot5>(5);
+		ArrayList<Alien> ones = new ArrayList<Alien>();
+		ArrayList<Alien> twos = new ArrayList<Alien>();
+		ArrayList<Alien> threes = new ArrayList<Alien>();
+		ArrayList<Alien> fours = new ArrayList<Alien>();
+		ArrayList<Alien> maxes = new ArrayList<Alien>();
+		
+		for(Alien baddie : baddies) {
+			if(baddie.isActive()) {
+				switch (baddie.getType()) {
+				case 1:
+					ones.add(baddie);
+					break;
+				case 2:
+					twos.add(baddie);
+					break;
+				case 3:
+					threes.add(baddie);
+					break;
+				case 4:
+					fours.add(baddie);
+					break;
+				default:
+					maxes.add(baddie);
+					break;
+				}
+			}
+		}
+		
+		if(maxes.size() > 4) {
+			targets.addAll(maxes);
+		} else if (fours.size() > 4) {
+			targets.addAll(fours);
+		} else if (threes.size() > 4) {
+			targets.addAll(threes);
+		} else if (twos.size() > 4) {
+			targets.addAll(twos);
+		} else if (ones.size() > 4) {
+			targets.addAll(ones);
+		} else {
+			for(Alien a : baddies) {
+				if(a.isActive()) {targets.add(a);}
+			}
+		}
+		List<Alien> finalTargets = targets.subList(0, Math.min(5, targets.size()));
+		
+		for(Alien target : finalTargets) {
+			missiles.add(new SpecialShot5(ge, x, y, target));
+		}
+		return missiles;
 	}
 }

@@ -89,7 +89,7 @@ public class AndroidInvaders extends Activity implements SensorEventListener {
 			scores2[i] = Settings.getInt(s, 0);
 		}
 		av.getGameEngine().getPrefs();
-		av.getGameEngine().nextLevel();
+		av.getGameEngine().start();
 		av.setHighScores(scores0, scores1, scores2);
 	}
 
@@ -227,15 +227,15 @@ public class AndroidInvaders extends Activity implements SensorEventListener {
 	public boolean onPrepareOptionsMenu(Menu m) {
 		launchingPauseMenu = true;
 		startActivity(new Intent(AndroidInvaders.this, PlayMenu.class));
-		//onPause();
 		return true;
 	}
 	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
         	launchingPauseMenu = true;
+        	av.getGameThread().setRunning(false);
         	startActivity(new Intent(AndroidInvaders.this, PlayMenu.class));
-        	//onPause();
         	return true;
         }
         return false;
