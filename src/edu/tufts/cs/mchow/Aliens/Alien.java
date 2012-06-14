@@ -83,7 +83,7 @@ public class Alien extends GameSprite {
 			}
 		}
 		int bl = gameEngine.getBaddiesLeft();
-		if ((bl == 1 && gameEngine.getLevelNum() != 9) || bl == 13) {
+		if (!active && ((bl == 1 && gameEngine.getLevelNum() != 9) || bl == 13)) {
 			gameEngine.addMothership();
 		}
 
