@@ -24,17 +24,6 @@ public class Alien5 extends Alien {
 	}
 
 	@Override
-	public void hit() {
-		super.hit();
-		if (gameEngine.alienType == 5)
-			gameEngine.numInARow++;
-		else if (gameEngine.numInARow < 4) {
-			gameEngine.numInARow = 1;
-			gameEngine.alienType = 5;
-		}
-	}
-
-	@Override
 	public void draw(Canvas c) {
 		super.draw(c);
 		if (curFrame == 0)
