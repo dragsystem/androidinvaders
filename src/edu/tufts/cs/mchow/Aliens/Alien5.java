@@ -22,6 +22,15 @@ public class Alien5 extends Alien {
 		this.set((float) x, (float) y, (float) (width + x),
 				(float) (height + y));
 	}
+	
+	@Override
+	public void hit() {
+		super.hit();
+		if(active) {
+			setImage(R.drawable.alien5_broken);
+			width = width/frames;
+		}
+	}
 
 	@Override
 	public void draw(Canvas c) {
