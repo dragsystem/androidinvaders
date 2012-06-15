@@ -1,5 +1,6 @@
 package edu.tufts.cs.mchow.Planet0;
 
+import edu.tufts.cs.mchow.R;
 import edu.tufts.cs.mchow.Game.GameEngine;
 import edu.tufts.cs.mchow.Game.GameSprite;
 import edu.tufts.cs.mchow.Game.Level;
@@ -51,5 +52,10 @@ public class Planet0 extends Planet {
 	
 	public Planet getNextPlanet() {
 		return new Planet1();
+	}
+
+	@Override
+	public int getBackgroundRes() {
+		return R.drawable.pluto;
 	}
 }

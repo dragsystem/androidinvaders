@@ -77,7 +77,7 @@ public class Alien extends GameSprite {
 	public void hit() {
 		if (active) {
 			hp--;
-			if (hp == 0) {
+			if (hp <= 0) {
 				active = false;
 				gameEngine.addToScore(points);
 			}
@@ -97,5 +97,10 @@ public class Alien extends GameSprite {
 	
 	public int getType() {
 		return type;
+	}
+
+	public void specialHit() {
+		hp = 0;
+		hit();
 	}
 }

@@ -21,7 +21,7 @@ public class Boss0 extends GameSprite {
 		maxHP = hp = 0;
 		switch(gameEngine.difficulty) {
 		case 0:
-			maxHP = hp = 1;
+			maxHP = hp = 24;
 			break;
 		case 1:
 			maxHP = hp = 30;

@@ -11,7 +11,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.Display;
-import edu.tufts.cs.mchow.R;
 import edu.tufts.cs.mchow.Aliens.Alien;
 import edu.tufts.cs.mchow.Planet0.Planet0;
 import edu.tufts.cs.mchow.Planet1.Planet1;
@@ -113,6 +112,8 @@ public class GameEngine {
 		
 		planet = planet.getNextPlanet();
 		levelNum = -1;
+		gameClock = 0;
+		shotCount = 0;
 		
 		PEB.putExtra(PlanetEndBonusActivity.EXTRA_GAMEWIN, null==planet);
 		context.startActivity(PEB);
@@ -155,7 +156,7 @@ public class GameEngine {
 		baddiesInit = level.baddies.size();
 		baddiesLeft = baddiesInit;
 		gameBackground = BitmapFactory.decodeResource(this.getContext()
-				.getResources(), R.drawable.pluto);
+				.getResources(), planet.getBackgroundRes());
 		loadingEnemies = true;
 		
 		pLevel = levelNum;
@@ -210,7 +211,7 @@ public class GameEngine {
 	
 	public void getPrefs() {
 		levelNum = Settings.getInt("levelNum", 0) - 1;
-		planetNum = 1;//Settings.getInt("planetNum", 0);
+		planetNum = Settings.getInt("planetNum", 0);
 		score = Settings.getInt("score", 0);
 		gameClock = Settings.getInt("clock", 0);
 		lives = Settings.getInt("lives", 5);
@@ -520,7 +521,7 @@ public class GameEngine {
 						if(ss instanceof SpecialShot5) {
 							((SpecialShot5)ss).hit(baddie);
 						} else {
-							baddie.hit();
+							baddie.specialHit();
 							ss.hit(baddie.getX() + baddie.getWidth() / 2, baddie.getY()
 									+ baddie.getHeight() / 2);
 							explosions.add(new Explosion(this, baddie.getX(), baddie.getY()));

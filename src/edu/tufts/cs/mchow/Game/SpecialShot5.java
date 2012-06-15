@@ -16,6 +16,7 @@ public class SpecialShot5 extends SpecialShot {
 
 	@Override
 	public void update() {
+		if(!target.isActive()) {active = false;}
 		if(!active) {return;}
 		
 		double diffX = target.x - x;

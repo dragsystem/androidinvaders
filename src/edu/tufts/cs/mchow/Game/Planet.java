@@ -7,4 +7,5 @@ public abstract class Planet {
 	public abstract GameSprite getBoss(GameEngine ge);
 	public int getMinShots() {return MIN_SHOTS;};
 	public abstract Planet getNextPlanet();
+	public abstract int getBackgroundRes();
 }
