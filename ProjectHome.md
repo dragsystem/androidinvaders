@@ -1,0 +1,1 @@
+This is very simply Space Invaders recreated for Android, based heavily on the Nintendo 64 version of the game.  Started as a final project for my Game Development class, with the front end written by Professor Ming Chow of Tufts University - many thanks to him for getting me started in Android.
